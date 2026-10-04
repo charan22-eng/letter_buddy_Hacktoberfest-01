@@ -1,0 +1,86 @@
+# ──────────────────────────────────────────────────────────
+# Letter Buddy – config.yaml
+# Auto-populated by scripts/setup.ps1 during Phase 0.
+# Manual edits are fine; re-running setup won't overwrite.
+# ──────────────────────────────────────────────────────────
+
+# ── GPU & tier ───────────────────────────────────────────
+gpu:
+  name: "NVIDIA GeForce RTX 4050 Laptop GPU"
+  vram_mb: 6141
+  driver: "592.82"
+  tier: "T6"           # T4 | T6 | T8 | CPU
+
+# ── LLM (Ollama) ────────────────────────────────────────
+llm:
+  primary: "qwen2.5:3b"           # Verified via `ollama list`
+  candidates:                      # For the benchmark (Phase 6)
+    - "qwen2.5:3b"
+    - "llama3.2:latest"
+  num_ctx: 4096
+  temperature: 0.15
+  max_predict: 1024
+  think: false                     # Disable thinking/reasoning mode
+
+# ── Ollama environment ──────────────────────────────────
+ollama:
+  max_loaded_models: 1
+  num_parallel: 1
+  host: "http://127.0.0.1:11434"
+
+# ── OCR ─────────────────────────────────────────────────
+ocr:
+  engine: "tesseract"              # Primary engine
+  langs: "eng+tel"                 # Tesseract -l flag
+  min_confidence: 55               # Mean word confidence threshold (0-100)
+  min_readable_ratio: 0.4          # Fraction of words above confidence threshold
+
+# ── Target language & i18n ──────────────────────────────
+language:
+  source: "en"                     # Language letters arrive in
+  target: "te"                     # Telugu – explanation language
+  target_name: "Telugu"
+  target_script: "Telugu"          # Unicode script name (for font check)
+
+# ── TTS ─────────────────────────────────────────────────
+tts:
+  engine: "espeak-ng"              # Fallback: no official Piper Telugu voice
+  voice: "te"                      # eSpeak-ng Telugu voice code
+  speed: 130                       # Words per minute (slower = clearer)
+  fallback_reason: "No official Piper voice for Telugu; using eSpeak-ng"
+  # piper_voice: null              # Would be set if Piper Telugu existed
+
+# ── Safety ──────────────────────────────────────────────
+safety:
+  trusted_contact:
+    name: "[TO BE FILLED]"
+    phone: "[TO BE FILLED]"
+  scam_keywords:
+    - "otp"
+    - "pin"
+    - "cvv"
+    - "password"
+    - "immediately"
+    - "arrested"
+    - "blocked"
+    - "suspended"
+  high_stakes_doc_types:
+    - "legal"
+    - "tax"
+    - "medical"
+
+# ── Privacy ─────────────────────────────────────────────
+privacy:
+  purge_hours: 1                   # Auto-delete uploads/OCR after this many hours
+  bind_host: "127.0.0.1"           # Loopback only by default
+  lan_mode: false                  # Requires explicit flag + PIN
+  lan_pin: null                    # Set by user for phone access
+
+# ── Paths ───────────────────────────────────────────────
+paths:
+  uploads: "uploads/"
+  output: "output/"
+  private_data: "data/private/"
+  samples: "data/samples/"
+  i18n: "i18n/"
+  fonts: "static/fonts/"
