@@ -108,15 +108,15 @@ if ($ollamaFound -and -not $SkipModelPull) {
     switch ($tier) {
         "T4" {
             $primaryModel = "qwen2.5:3b"
-            $candidates = @("qwen2.5:3b", "llama3.2:latest")
+            $candidates = @("qwen2.5:3b")
         }
         "T6" {
-            $primaryModel = "qwen2.5:7b"
-            $candidates = @("qwen2.5:7b", "llama3.2:latest")
+            $primaryModel = "qwen2.5:3b"
+            $candidates = @("qwen2.5:3b")
         }
         "T8" {
-            $primaryModel = "qwen2.5:7b"
-            $candidates = @("qwen2.5:7b", "llama3.2:latest")
+            $primaryModel = "qwen2.5:3b"
+            $candidates = @("qwen2.5:3b")
         }
         default {
             $primaryModel = "qwen2.5:3b"
