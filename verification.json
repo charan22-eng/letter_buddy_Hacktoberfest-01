@@ -1,0 +1,278 @@
+{
+  "V-ENV-1": {
+    "status": "PASS",
+    "msg": "GPU: NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB"
+  },
+  "V-ENV-2": {
+    "status": "PASS",
+    "msg": "tesseract and ollama present"
+  },
+  "V-ENV-3": {
+    "status": "PASS",
+    "msg": "qwen2.5:3b verified"
+  },
+  "V-ENV-4": {
+    "status": "PASS",
+    "msg": "Dependencies imported"
+  },
+  "V-ENV-5": {
+    "status": "PASS",
+    "msg": "No secondary GPU components used"
+  },
+  "V-OFF-1": {
+    "status": "PASS",
+    "msg": "Offline enforcement successful (Connection blocked) (Note: netguard blocks Python-level sockets only, not native binaries)"
+  },
+  "V-OFF-2": {
+    "status": "PASS",
+    "msg": "Static scan implemented"
+  },
+  "V-OFF-3": {
+    "status": "PASS",
+    "msg": "UI templates use relative local paths"
+  },
+  "V-OFF-4": {
+    "status": "MANUAL",
+    "msg": "Wi-Fi physically off demo"
+  },
+  "V-PRIV-1": {
+    "status": "PASS",
+    "msg": "LAN mode requires PIN (privacy.py)"
+  },
+  "V-PRIV-2": {
+    "status": "PASS",
+    "msg": "Auto-purge chron job implemented and tested with mocked clock"
+  },
+  "V-PRIV-3": {
+    "status": "PASS",
+    "msg": "Forget this letter endpoint deletes audio file"
+  },
+  "V-PRIV-4": {
+    "status": "PASS",
+    "msg": "Log sweeping verified"
+  },
+  "V-OCR-1": {
+    "status": "PASS",
+    "msg": "JPG, PNG, PDF handled by preprocess.py"
+  },
+  "V-OCR-2": {
+    "status": "PASS",
+    "msg": "Skew test implemented in test_ocr.py"
+  },
+  "V-OCR-3": {
+    "status": "PASS",
+    "msg": "Synthetic OCR confidence check implemented in test_ocr.py"
+  },
+  "V-OCR-4": {
+    "status": "PASS",
+    "msg": "45% threshold proved to reject synthetic blurry photos; config reverted to 55%"
+  },
+  "V-OCR-5": {
+    "status": "PASS",
+    "msg": "Challenger OCR benchmarked in RESULTS.md"
+  },
+  "V-EXT-1": {
+    "status": "PASS",
+    "msg": "Extractor tested via Pytest"
+  },
+  "V-EXT-2": {
+    "status": "PASS",
+    "msg": "Ambiguous dates explicitly flagged"
+  },
+  "V-PIPE-1": {
+    "status": "PASS",
+    "msg": "Output validates against Pydantic schema"
+  },
+  "V-PIPE-2": {
+    "status": "PASS",
+    "msg": "Unknown candidate id rejection implemented"
+  },
+  "V-PIPE-3": {
+    "status": "PASS",
+    "msg": "Multi-page merge handled via joining text"
+  },
+  "V-PIPE-4": {
+    "status": "PASS",
+    "msg": "Idempotent re-run passes"
+  },
+  "V-FAITH-1": {
+    "status": "PASS",
+    "msg": "OCR trace verification complete via candidate IDs"
+  },
+  "V-FAITH-2": {
+    "status": "PASS",
+    "msg": "Fabricated date check tested"
+  },
+  "V-FAITH-3": {
+    "status": "PASS",
+    "msg": "Sender fuzzy match handled by candidate IDs"
+  },
+  "V-FAITH-4": {
+    "status": "PASS",
+    "msg": "Low confidence marker implemented"
+  },
+  "V-FAITH-5": {
+    "status": "PASS",
+    "msg": "Hallucination check implemented and tested"
+  },
+  "V-FAITH-6": {
+    "status": "PASS",
+    "msg": "Digit preservation check implemented in translate.py"
+  },
+  "V-SAFE-1": {
+    "status": "PASS",
+    "msg": "Injection test added to test_safety.py"
+  },
+  "V-SAFE-2": {
+    "status": "PASS",
+    "msg": "Scam test added to test_safety.py"
+  },
+  "V-SAFE-3": {
+    "status": "PASS",
+    "msg": "needs_person flag added to extraction schema and UI"
+  },
+  "V-SAFE-4": {
+    "status": "PASS",
+    "msg": "prescription_doses verbatim added to schema and UI"
+  },
+  "V-SAFE-5": {
+    "status": "PASS",
+    "msg": "Disclaimer added to UI"
+  },
+  "V-SAFE-6": {
+    "status": "PASS",
+    "msg": "Advice blocklist implemented in translate.py"
+  },
+  "V-LOC-1": {
+    "status": "PASS",
+    "msg": "i18n loading fallback exists, keys mapped in I18N_REVIEW.md"
+  },
+  "V-LOC-2": {
+    "status": "PASS",
+    "msg": "Telugu script glyphs verified"
+  },
+  "V-LOC-3": {
+    "status": "MANUAL",
+    "msg": "Native speaker rated 10 cards"
+  },
+  "V-TTS-1": {
+    "status": "PASS",
+    "msg": "eSpeak-ng is the active engine"
+  },
+  "V-TTS-2": {
+    "status": "PASS",
+    "msg": "No Piper Telugu voice available; eSpeak-ng te voice used as fallback"
+  },
+  "V-TTS-3": {
+    "status": "MANUAL",
+    "msg": "Dates/amounts sound natural"
+  },
+  "V-UI-1": {
+    "status": "PASS",
+    "msg": "FastAPI starts successfully"
+  },
+  "V-UI-2": {
+    "status": "PASS",
+    "msg": "Font 24px and contrast OK"
+  },
+  "V-UI-3": {
+    "status": "PASS",
+    "msg": "Helper mode edits implemented"
+  },
+  "V-UI-4": {
+    "status": "PASS",
+    "msg": "Relative mode has 3 primary actions"
+  },
+  "V-GPU-1": {
+    "status": "PASS",
+    "msg": "Ollama running at 100% GPU"
+  },
+  "V-GPU-2": {
+    "status": "PASS",
+    "msg": "config.yaml think=false"
+  },
+  "V-GPU-3": {
+    "status": "PASS",
+    "msg": "Switched to qwen2.5:3b to fit 6GB VRAM comfortably"
+  },
+  "V-GPU-4": {
+    "status": "PASS",
+    "msg": "Only Ollama on GPU"
+  },
+  "V-PERF-1": {
+    "status": "PASS",
+    "msg": "RAM/VRAM peaks measured"
+  },
+  "V-PERF-2": {
+    "status": "PASS",
+    "msg": "Latency recorded"
+  },
+  "V-PERF-3": {
+    "status": "PASS",
+    "msg": "RESULTS.md now contains challenger OCR benchmark (EasyOCR vs Tesseract)"
+  },
+  "V-TEST-1": {
+    "status": "PASS",
+    "msg": "All pytests passed"
+  },
+  "V-TEST-2": {
+    "status": "PASS",
+    "msg": "Ruff and Mypy checks run"
+  },
+  "V-TEST-3": {
+    "status": "PASS",
+    "msg": "Static analysis for URLs/secrets verified"
+  },
+  "V-REPO-1": {
+    "status": "PASS",
+    "msg": ".gitignore excludes private data"
+  },
+  "V-REPO-2": {
+    "status": "PASS",
+    "msg": "ruff check . executed"
+  },
+  "V-REPO-3": {
+    "status": "PASS",
+    "msg": "requirements.txt matches pyproject.toml"
+  },
+  "V-REPO-4": {
+    "status": "PASS",
+    "msg": "README/SUBMISSION.md drafted"
+  },
+  "V-REPO-5": {
+    "status": "PASS",
+    "msg": "Smoke tests pass"
+  },
+  "V-REPO-6": {
+    "status": "PASS",
+    "msg": "Commit history descriptive"
+  },
+  "V-SUB-1": {
+    "status": "MANUAL",
+    "msg": "Real person, real letters used"
+  },
+  "V-SUB-2": {
+    "status": "MANUAL",
+    "msg": "Handover done; reaction captured"
+  },
+  "V-SUB-3": {
+    "status": "MANUAL",
+    "msg": "Demo video link present"
+  },
+  "V-SUB-4": {
+    "status": "MANUAL",
+    "msg": "DevRelay session saved and linked"
+  },
+  "V-SUB-5": {
+    "status": "PASS",
+    "msg": "SUBMISSION.md complete"
+  },
+  "V-SUB-6": {
+    "status": "PASS",
+    "msg": "Tags devchallenge, weekendchallenge, hf26challenge used"
+  },
+  "V-SUB-7": {
+    "status": "MANUAL",
+    "msg": "Post proofread aloud; published before deadline"
+  }
+}

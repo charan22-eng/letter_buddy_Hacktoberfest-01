@@ -1,5 +1,5 @@
 # System Verification Report
-Generated: 2026-10-05T02:25:50.396681   Machine: NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB
+Generated: 2026-10-05T04:33:34.696208   Machine: NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB
 GPU: NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB · LLM qwen2.5:3b · OCR Tesseract · TTS eSpeak-ng
 
 ## Summary

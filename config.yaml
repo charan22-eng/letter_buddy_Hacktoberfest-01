@@ -16,7 +16,7 @@ llm:
   primary: "qwen2.5:3b"           # Verified via `ollama list`
   candidates:                      # For the benchmark (Phase 6)
     - "qwen2.5:3b"
-    - "llama3.2:latest"
+
   num_ctx: 4096
   temperature: 0.15
   max_predict: 1024
