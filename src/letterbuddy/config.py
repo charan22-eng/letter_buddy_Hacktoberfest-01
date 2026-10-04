@@ -39,8 +39,8 @@ class GpuConfig(BaseModel):
 
 
 class LlmConfig(BaseModel):
-    primary: str = "qwen2.5:7b"
-    candidates: list[str] = Field(default_factory=lambda: ["qwen2.5:7b"])
+    primary: str = "qwen2.5:3b"
+    candidates: list[str] = Field(default_factory=lambda: ["qwen2.5:3b"])
     num_ctx: int = 4096
     temperature: float = 0.15
     max_predict: int = 1024
