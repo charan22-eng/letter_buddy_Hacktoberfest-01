@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Buddy</title>
+    <style>
+        :root {
+            --bg: #fdfbf7;
+            --text: #2d3748;
+            --primary: #4a90e2;
+            --critical: #e53e3e;
+            --warning: #dd6b20;
+            --info: #3182ce;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            font-size: 24px;
+            line-height: 1.5;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { font-size: 2em; text-align: center; margin-bottom: 30px; }
+        .card {
+            background: white; border-radius: 12px; padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+        button {
+            background-color: var(--primary); color: white; border: none;
+            padding: 20px; font-size: 1.2em; border-radius: 8px; cursor: pointer;
+            width: 100%; margin-bottom: 15px; font-weight: bold;
+        }
+        .btn-secondary { background-color: #718096; }
+        .btn-danger { background-color: var(--critical); }
+        .audio-player { display: none; }
+        .severity-critical { border-left: 8px solid var(--critical); }
+        .severity-warning { border-left: 8px solid var(--warning); }
+        .severity-info { border-left: 8px solid var(--info); }
+        .field { margin-bottom: 15px; }
+        .field-label { font-weight: bold; color: #718096; font-size: 0.9em; }
+        .field-value { font-size: 1.2em; font-weight: 500; }
+        #result, #loading, #error { display: none; }
+        .loader {
+            border: 8px solid #f3f3f3; border-top: 8px solid var(--primary);
+            border-radius: 50%; width: 60px; height: 60px;
+            animation: spin 2s linear infinite; margin: 20px auto;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>లెటర్ బడ్డీ (Letter Buddy)</h1>
+        
+        <div class="card" id="upload-section">
+            <button onclick="document.getElementById('file-input').click()">కెమెరాతో ఫోటో తీయండి (Take photo)</button>
+            <input type="file" id="file-input" accept="image/*,application/pdf" style="display: none;" onchange="processFile()">
+        </div>
+        
+        <div id="loading" class="card" style="text-align: center;">
+            <div class="loader"></div>
+            <p>దయచేసి వేచి ఉండండి... (Reading...)</p>
+        </div>
+        
+        <div id="error" class="card" style="border-left: 8px solid var(--critical);">
+            <p id="error-msg"></p>
+            <button onclick="resetUI()" class="btn-secondary">మళ్ళీ ప్రయత్నించండి (Try Again)</button>
+        </div>
+        
+        <div id="result" class="card">
+            <div id="banner-scam" style="display:none; background-color: var(--critical); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; text-align: center;">
+                ⚠️ ఇది మోసం (స్కామ్) అయ్యే ప్రమాదం ఉంది! (WARNING: Scam signals detected)
+            </div>
+            
+            <div id="banner-person" style="display:none; background-color: var(--warning); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; text-align: center;">
+                👨‍👩‍👦 ఇది ముఖ్యమైన కాగితం. మీ ఇంట్లో వాళ్లకు చూపించండి! (Show this to a trusted contact)
+            </div>
+
+            <h2 id="r-summary" style="margin-top: 0;"></h2>
+            
+            <audio id="r-audio" class="audio-player"></audio>
+            
+            <!-- Removed autoplay, replaced with explicit Read to me button -->
+            <button onclick="playAudio()" id="btn-read" style="background-color: #48bb78;">చదివి వినిపించండి (Read to me)</button>
+            
+            <hr style="margin: 20px 0; border: 1px solid #edf2f7;">
+            
+            <div class="field">
+                <div class="field-label">పంపిన వారు (From):</div>
+                <div class="field-value" id="r-sender"></div>
+            </div>
+            
+            <div class="field" id="div-deadline" style="display:none;">
+                <div class="field-label" style="color: var(--critical);">చేయవలసిన తేదీ (Deadline):</div>
+                <div class="field-value" id="r-deadline" style="color: var(--critical);"></div>
+            </div>
+            
+            <div class="field" id="div-amount" style="display:none;">
+                <div class="field-label">మొత్తం (Amount):</div>
+                <div class="field-value" id="r-amount"></div>
+            </div>
+            
+            <div class="field" id="div-doses" style="display:none;">
+                <div class="field-label">మందుల వివరాలు (Doses verbatim):</div>
+                <div class="field-value" id="r-doses" style="font-size: 1em; background: #edf2f7; padding: 10px; border-radius: 5px;"></div>
+            </div>
+            
+            <div style="font-size: 0.7em; color: #a0aec0; margin-top: 20px; text-align: center;">
+                గమనిక: ఈ యాప్ కేవలం సహాయం కోసం మాత్రమే. ముఖ్యమైన పనులకు ఇతరుల సహాయం తీసుకోండి. (Note: App is for assistance only. Verify important actions.)
+            </div>
+            
+            <hr style="margin: 20px 0; border: 1px solid #edf2f7;">
+            
+            <button onclick="toggleHelperMode()" class="btn-secondary" style="font-size: 1em; padding: 10px;">Helper Mode: Edit OCR</button>
+            <div id="helper-mode" style="display:none; margin-top: 15px;">
+                <textarea id="raw-ocr-text" style="width:100%; height:150px; padding:10px; font-size:16px; font-family:monospace; border:1px solid #cbd5e0; border-radius:4px; box-sizing: border-box;"></textarea>
+                <button onclick="processText()" style="background-color: #3182ce; font-size: 1em; padding: 10px; margin-top: 10px;">Re-process Edited Text</button>
+            </div>
+            
+            <button onclick="forgetLetter()" class="btn-danger" style="margin-top: 30px;">ఈ లెటర్ ని మర్చిపో (Forget this letter)</button>
+        </div>
+    </div>
+
+    <script>
+        // Check for PIN in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pin = urlParams.get('pin');
+        let currentAudioUrl = null;
+
+        async function processFile() {
+            const fileInput = document.getElementById('file-input');
+            if (!fileInput.files || fileInput.files.length === 0) return;
+            
+            document.getElementById('upload-section').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            let url = '/api/process';
+            if (pin) url += '?pin=' + encodeURIComponent(pin);
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.status === 401 || response.status === 403) {
+                     showError("LAN mode PIN required or invalid.");
+                     document.getElementById('loading').style.display = 'none';
+                     return;
+                }
+                
+                const data = await response.json();
+                document.getElementById('loading').style.display = 'none';
+                
+                if (!data.success) {
+                    showError(data.retake_reason || "ఫోటో సరిగ్గా లేదు. మళ్ళీ తీయండి.");
+                    return;
+                }
+                showResult(data);
+            } catch (err) {
+                document.getElementById('loading').style.display = 'none';
+                showError("సర్వర్ తో సమస్య ఉంది. మళ్ళీ ప్రయత్నించండి.");
+                console.error(err);
+            }
+        }
+        
+        function showError(msg) {
+            document.getElementById('error-msg').innerText = msg;
+            document.getElementById('error').style.display = 'block';
+        }
+        
+        function showResult(data) {
+            const ext = data.extracted;
+            const resDiv = document.getElementById('result');
+            resDiv.className = 'card severity-' + ext.severity;
+            
+            document.getElementById('r-summary').innerText = data.translated_summary;
+            document.getElementById('r-sender').innerText = ext.sender;
+            
+            if (ext.action_deadline) {
+                document.getElementById('div-deadline').style.display = 'block';
+                document.getElementById('r-deadline').innerText = ext.action_deadline;
+            } else {
+                document.getElementById('div-deadline').style.display = 'none';
+            }
+            
+            if (ext.payment_amount) {
+                document.getElementById('div-amount').style.display = 'block';
+                document.getElementById('r-amount').innerText = ext.payment_amount;
+            } else {
+                document.getElementById('div-amount').style.display = 'none';
+            }
+            
+            if (ext.prescription_doses) {
+                document.getElementById('div-doses').style.display = 'block';
+                document.getElementById('r-doses').innerText = ext.prescription_doses;
+            } else {
+                document.getElementById('div-doses').style.display = 'none';
+            }
+            
+            document.getElementById('banner-scam').style.display = ext.is_scam ? 'block' : 'none';
+            document.getElementById('banner-person').style.display = ext.needs_person ? 'block' : 'none';
+            
+            if (data.raw_ocr) {
+                document.getElementById('raw-ocr-text').value = data.raw_ocr;
+            }
+            
+            if (data.audio_url) {
+                let a_url = data.audio_url;
+                if (pin) a_url += '?pin=' + encodeURIComponent(pin);
+                document.getElementById('r-audio').src = a_url;
+                document.getElementById('btn-read').style.display = 'block';
+                currentAudioUrl = data.audio_url; // Store original
+            } else {
+                document.getElementById('r-audio').src = "";
+                document.getElementById('btn-read').style.display = 'none';
+                currentAudioUrl = null;
+            }
+            
+            resDiv.style.display = 'block';
+        }
+        
+        function playAudio() {
+            document.getElementById('r-audio').play();
+        }
+        
+        async function forgetLetter() {
+            if (currentAudioUrl) {
+                const filename = currentAudioUrl.split('/').pop();
+                let url = '/api/forget/' + encodeURIComponent(filename);
+                if (pin) url += '?pin=' + encodeURIComponent(pin);
+                await fetch(url, { method: 'POST' });
+            }
+            resetUI();
+        }
+        
+        function resetUI() {
+            document.getElementById('file-input').value = "";
+            document.getElementById('upload-section').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+            const audio = document.getElementById('r-audio');
+            audio.pause();
+            audio.src = "";
+            currentAudioUrl = null;
+            document.getElementById('helper-mode').style.display = 'none';
+        }
+        
+        function toggleHelperMode() {
+            const el = document.getElementById('helper-mode');
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        async function processText() {
+            const text = document.getElementById('raw-ocr-text').value;
+            if (!text) return;
+            
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            let url = '/api/process_text';
+            if (pin) url += '?pin=' + encodeURIComponent(pin);
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text })
+                });
+                
+                const data = await response.json();
+                document.getElementById('loading').style.display = 'none';
+                
+                if (!data.success) {
+                    showError(data.retake_reason || "Could not process edited text.");
+                    return;
+                }
+                showResult(data);
+            } catch (err) {
+                document.getElementById('loading').style.display = 'none';
+                showError("Server error.");
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
