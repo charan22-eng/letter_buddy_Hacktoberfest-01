@@ -26,7 +26,7 @@ def test_offline_enforcement():
 def check_ollama_gpu():
     try:
         # Load the model first
-        subprocess.run(["curl", "-s", "-X", "POST", "http://localhost:11434/api/generate", "-d", '{"model": "qwen2.5:3b", "prompt": "hi", "stream": false}'], capture_output=True)
+        subprocess.run(["curl", "-s", "--max-time", "15", "-X", "POST", "http://localhost:11434/api/generate", "-d", '{"model": "qwen2.5:3b", "prompt": "hi", "stream": false}'], capture_output=True)
         res = subprocess.run(["ollama", "ps"], capture_output=True, text=True, encoding="utf-8", errors="ignore")
         if "100%" in res.stdout:
             return True, "Ollama running at 100% GPU"
