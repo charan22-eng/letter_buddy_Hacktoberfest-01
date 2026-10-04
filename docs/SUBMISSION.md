@@ -13,7 +13,7 @@ Crucially, **nothing ever leaves the machine**. Official letters contain sensiti
 ## Technical Architecture
 - **Hardware**: NVIDIA RTX 4050 Laptop GPU (6GB VRAM - Tier T6)
 - **OCR**: PyTesseract (with custom confidence-based quality gates to reject blurry photos)
-- **LLM**: Ollama (`qwen2.5:7b`) for deterministic structured extraction and translation
+- **LLM**: Ollama (`qwen2.5:3b`) for deterministic structured extraction and translation
 - **TTS**: `espeak-ng` for offline Telugu speech synthesis
 - **Frontend**: Pure HTML/JS/CSS served via FastAPI, designed with high contrast and large touch targets
 
