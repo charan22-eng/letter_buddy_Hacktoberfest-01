@@ -1,0 +1,64 @@
+# ──────────────────────────────────────────────────────
+# Letter Buddy – English labels (i18n/en.yaml)
+# Hand-written. These are NOT machine-translated.
+# ──────────────────────────────────────────────────────
+
+# ── Card labels ──────────────────────────────────────
+labels:
+  doc_type: "Type of letter"
+  sender: "From"
+  summary: "What this letter says"
+  actions: "What you need to do"
+  deadline: "By when"
+  amount: "How much"
+  contact: "Who to contact"
+  questions: "Questions you may want to ask"
+  original_text: "Original text"
+  confidence: "Reading confidence"
+
+# ── Status messages ──────────────────────────────────
+status:
+  reading: "Reading your letter…"
+  understanding: "Understanding the letter…"
+  translating: "Translating for you…"
+  speaking: "Reading aloud…"
+  done: "Done!"
+  error: "Something went wrong. Please try again."
+
+# ── Quality gate ─────────────────────────────────────
+quality:
+  retake: "I can't read this well. Please retake the photo in better light."
+  blurry: "The photo looks blurry. Hold the camera steady and try again."
+  dark: "The photo is too dark. Move to a brighter spot."
+  tilted: "The letter looks very tilted. Try to hold the camera straight above it."
+  cut_off: "Part of the letter might be cut off. Make sure the whole letter is in the photo."
+
+# ── Safety banners ───────────────────────────────────
+safety:
+  disclaimer: "I explain what the letter says. I cannot give legal, medical, or money advice."
+  scam_warning: "⚠️ Warning: Banks and government offices never ask for your OTP, PIN, or password. Do not share them with anyone. Call the number printed on your bank card or passbook."
+  needs_person: "⚠️ This is important. Please show this letter to {trusted_contact} before doing anything."
+  check_number: "⚡ Please check this number on the paper — I'm not fully sure I read it correctly."
+  auto_translation: "This translation was done automatically. If unsure, check with a family member."
+  prescription_warning: "⚠️ This is a prescription. I am showing you exactly what is written. Please show it to {trusted_contact} for any questions about medicines or doses."
+
+# ── Buttons ──────────────────────────────────────────
+buttons:
+  take_photo: "📷 Take a photo"
+  choose_file: "📁 Choose a file"
+  read_aloud: "🔊 Read to me"
+  forget: "🗑️ Forget this letter"
+  helper_mode: "🔧 Helper mode"
+  approve: "✅ Approve"
+  edit: "✏️ Edit"
+  rerun: "🔄 Re-read"
+  show_original: "📄 Show original"
+
+# ── Misc ─────────────────────────────────────────────
+misc:
+  app_name: "Letter Buddy"
+  tagline: "Your letters, explained simply"
+  not_sure: "not sure"
+  ambiguous_date: "This date could be read two ways. Please check on the paper."
+  draft: "Draft — not reviewed yet"
+  approved: "Reviewed ✓"
