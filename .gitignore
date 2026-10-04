@@ -1,0 +1,50 @@
+# ─── Private data (NEVER commit) ──────────────────
+data/private/
+uploads/
+output/
+*.wav
+*.mp3
+
+# ─── Python ───────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.whl
+
+# ─── Virtual environments ────────────────────────
+.venv/
+venv/
+env/
+
+# ─── IDE / OS ─────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
+
+# ─── Environment / secrets ───────────────────────
+.env
+.env.*
+
+# ─── Temp & cache ────────────────────────────────
+*.tmp
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# ─── Model files (downloaded, not committed) ─────
+models/
+*.onnx
+*.bin
+*.gguf
