@@ -85,12 +85,73 @@ def _cmd_read(args: argparse.Namespace) -> None:
 
 def _cmd_explain(args: argparse.Namespace) -> None:
     """Full pipeline: OCR → extract → understand → card."""
-    print("⏳ explain command — implementation coming in Phase 3+")
+    from letterbuddy.config import cfg
+    from letterbuddy.extract import extract_info
+    from letterbuddy.ocr import ocr_images
+    from letterbuddy.preprocess import preprocess_file
+    from letterbuddy.translate import translate_summary
+    from letterbuddy.tts import generate_audio
+
+    lang = args.lang or cfg.ocr.langs
+    print(f"Reading {args.file}...")
+    images = preprocess_file(args.file)
+    result = ocr_images(images, lang=lang)
+
+    if result.needs_retake:
+        print(f"\n⚠️  {result.retake_reason}")
+        print(f"   Confidence: {result.mean_confidence:.0f}%")
+        return
+
+    print("Extracting information...")
+    extracted = extract_info(result.full_text)
+
+    print("Translating...")
+    translated = translate_summary(extracted)
+
+    print("\n" + "="*40)
+    print("LETTER BUDDY CARD")
+    print("="*40)
+    print(f"Sender: {extracted.sender}")
+    if extracted.date:
+        print(f"Date: {extracted.date}")
+    if extracted.subject:
+        print(f"Subject: {extracted.subject}")
+    print(f"Summary: {translated}")
+    if extracted.payment_amount:
+        print(f"Amount: {extracted.payment_amount}")
+    if extracted.action_deadline:
+        print(f"Deadline: {extracted.action_deadline}")
+    if extracted.needs_person:
+        print("⚠️ IMPORTANT: This letter needs a person's review!")
+    if extracted.is_scam:
+        print("🚨 CRITICAL: Possible scam detected!")
+    print("="*40)
+
+    if args.speak:
+        audio_path = "output_audio.wav"
+        print(f"Generating audio to {audio_path}...")
+        generate_audio(translated, output_path=audio_path)
+        print("Audio generated.")
 
 
 def _cmd_serve(args: argparse.Namespace) -> None:
     """Start the web UI server."""
-    print("⏳ serve command — implementation coming in Phase 6")
+    import os
+
+    import uvicorn
+
+    host = args.host or "127.0.0.1"
+    port = args.port or 8000
+    if args.lan:
+        host = "0.0.0.0"
+        if not args.pin and not os.environ.get("LETTERBUDDY_LAN_PIN"):
+            print("ERROR: --lan requires --pin or LETTERBUDDY_LAN_PIN env var.")
+            return
+        if args.pin:
+            os.environ["LETTERBUDDY_LAN_PIN"] = args.pin
+
+    print(f"Starting server on http://{host}:{port}")
+    uvicorn.run("letterbuddy.web.main:app", host=host, port=port)
 
 
 def _cmd_setup() -> None:
