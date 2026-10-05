@@ -1,9 +1,11 @@
-import shutil
 import asyncio
-import time
 import os
+import shutil
+import time
 from pathlib import Path
+
 from fastapi import HTTPException, Request
+
 
 def verify_lan_pin(request: Request):
     client_host = request.client.host if request.client else "127.0.0.1"
