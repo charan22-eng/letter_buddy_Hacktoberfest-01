@@ -2,6 +2,7 @@
 
 import re
 
+
 def is_scam_deterministic(ocr_text: str) -> bool:
     ocr_lower = ocr_text.lower()
     signals = [
@@ -13,15 +14,15 @@ def is_scam_deterministic(ocr_text: str) -> bool:
     ]
     if any(s in ocr_lower for s in signals):
         return True
-        
+
     url_pattern = r'(https?://(?:bit\.ly|tinyurl\.com|t\.co|ow\.ly)/[a-zA-Z0-9]+)'
     if re.search(url_pattern, ocr_text, flags=re.IGNORECASE):
         return True
-        
+
     fake_authority = ["police warrant", "income tax department will arrest", "cbi inquiry"]
     if any(s in ocr_lower for s in fake_authority):
         return True
-        
+
     return False
 
 def is_high_stakes_deterministic(ocr_text: str) -> bool:
