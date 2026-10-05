@@ -1,5 +1,6 @@
 from letterbuddy.extract import extract_info
 
+
 def test_scam_detection():
     # Scam letter text
     text = """
@@ -42,13 +43,14 @@ def test_high_stakes_detection():
     result = extract_info(text)
     assert result.needs_person is True
 def test_translation_digit_preservation(monkeypatch):
+    import httpx
+
+    from letterbuddy.config import cfg
     from letterbuddy.extract import ExtractedLetter
     from letterbuddy.translate import translate_summary
-    from letterbuddy.config import cfg
-    import httpx
-    
+
     cfg.language.target = "te"
-    
+
     class MockResponse:
         def raise_for_status(self): pass
         def json(self):
@@ -56,7 +58,7 @@ def test_translation_digit_preservation(monkeypatch):
     def mock_post(*args, **kwargs):
         return MockResponse()
     monkeypatch.setattr(httpx, "post", mock_post)
-    
+
     letter = ExtractedLetter(
         sender="Bank", summary="Pay Rs. 12500 by 15th.",
         action_required=True, severity="info", needs_person=False, is_scam=False
