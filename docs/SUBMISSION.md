@@ -30,4 +30,4 @@ From our synthetic benchmarks (`eval/RESULTS.md`):
 [MANUAL ITEM: The person's own reaction goes here]
 
 ## Open Source
-This project was built for Hacktoberfest. You can find the full source code and setup instructions here: [GitHub Repo Link TBD]
+This project was built for Hacktoberfest. You can find the full source code and setup instructions here: https://github.com/charan22-eng/letter_buddy_Hacktoberfest-01
