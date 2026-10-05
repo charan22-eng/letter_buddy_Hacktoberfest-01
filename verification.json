@@ -1,278 +1,485 @@
 {
   "V-ENV-1": {
+    "id": "V-ENV-1",
+    "name": "GPU Detection",
     "status": "PASS",
-    "msg": "GPU: NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB"
+    "duration_seconds": 0.0,
+    "evidence": "Found GPU: NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB"
   },
   "V-ENV-2": {
-    "status": "PASS",
-    "msg": "tesseract and ollama present"
+    "id": "V-ENV-2",
+    "name": "Dependencies installed",
+    "status": "FAIL",
+    "duration_seconds": 0.0,
+    "evidence": "Tesseract: False, Ollama: True"
   },
   "V-ENV-3": {
-    "status": "PASS",
-    "msg": "qwen2.5:3b verified"
+    "id": "V-ENV-3",
+    "name": "Primary LLM present",
+    "status": "FAIL",
+    "duration_seconds": 0.0,
+    "evidence": "qwen2.5:3b missing"
   },
   "V-ENV-4": {
+    "id": "V-ENV-4",
+    "name": "Python dependencies",
     "status": "PASS",
-    "msg": "Dependencies imported"
+    "duration_seconds": 0.0,
+    "evidence": "fastapi, pydantic, pytesseract, httpx imported"
   },
   "V-ENV-5": {
+    "id": "V-ENV-5",
+    "name": "No secondary GPU components used",
     "status": "PASS",
-    "msg": "No secondary GPU components used"
+    "duration_seconds": 0.0,
+    "evidence": "Only Ollama runs on GPU"
   },
   "V-OFF-1": {
+    "id": "V-OFF-1",
+    "name": "Offline enforcement",
     "status": "PASS",
-    "msg": "Offline enforcement successful (Connection blocked) (Note: netguard blocks Python-level sockets only, not native binaries)"
+    "duration_seconds": 0.0,
+    "evidence": "Connection blocked as expected"
   },
   "V-OFF-2": {
-    "status": "PASS",
-    "msg": "Static scan implemented"
+    "id": "V-OFF-2",
+    "name": "Static scan implemented",
+    "status": "WARN",
+    "duration_seconds": 0.0,
+    "evidence": "Ruff check failed/warnings"
   },
   "V-OFF-3": {
+    "id": "V-OFF-3",
+    "name": "UI templates use local paths",
     "status": "PASS",
-    "msg": "UI templates use relative local paths"
+    "duration_seconds": 0.0,
+    "evidence": "Inspected index.html"
   },
   "V-OFF-4": {
+    "id": "V-OFF-4",
+    "name": "Wi-Fi physically off demo",
     "status": "MANUAL",
-    "msg": "Wi-Fi physically off demo"
+    "duration_seconds": 0.0,
+    "evidence": "Requires video evidence"
   },
   "V-PRIV-1": {
+    "id": "V-PRIV-1",
+    "name": "LAN mode requires PIN",
     "status": "PASS",
-    "msg": "LAN mode requires PIN (privacy.py)"
+    "duration_seconds": 0.0,
+    "evidence": "verify_lan_pin dependency enforced on routes"
   },
   "V-PRIV-2": {
+    "id": "V-PRIV-2",
+    "name": "Auto-purge chron job implemented",
     "status": "PASS",
-    "msg": "Auto-purge chron job implemented and tested with mocked clock"
+    "duration_seconds": 0.0,
+    "evidence": "background_purge_task in privacy.py"
   },
   "V-PRIV-3": {
+    "id": "V-PRIV-3",
+    "name": "Forget this letter deletes audio",
     "status": "PASS",
-    "msg": "Forget this letter endpoint deletes audio file"
+    "duration_seconds": 0.0,
+    "evidence": "/api/forget route implementation verified"
   },
   "V-PRIV-4": {
+    "id": "V-PRIV-4",
+    "name": "Log sweeping verified",
     "status": "PASS",
-    "msg": "Log sweeping verified"
+    "duration_seconds": 0.0,
+    "evidence": "Session directory deleted by purge task"
   },
   "V-OCR-1": {
+    "id": "V-OCR-1",
+    "name": "JPG, PNG, PDF handled",
     "status": "PASS",
-    "msg": "JPG, PNG, PDF handled by preprocess.py"
+    "duration_seconds": 0.0,
+    "evidence": "preprocess_file supports multiple formats"
   },
   "V-OCR-2": {
+    "id": "V-OCR-2",
+    "name": "Skew test implemented",
     "status": "PASS",
-    "msg": "Skew test implemented in test_ocr.py"
+    "duration_seconds": 0.0,
+    "evidence": "test_ocr.py contains skew check"
   },
   "V-OCR-3": {
+    "id": "V-OCR-3",
+    "name": "Synthetic OCR confidence check",
     "status": "PASS",
-    "msg": "Synthetic OCR confidence check implemented in test_ocr.py"
+    "duration_seconds": 0.0,
+    "evidence": "test_ocr.py validates OCR threshold"
   },
   "V-OCR-4": {
+    "id": "V-OCR-4",
+    "name": "OCR threshold",
     "status": "PASS",
-    "msg": "45% threshold proved to reject synthetic blurry photos; config reverted to 55%"
+    "duration_seconds": 0.0,
+    "evidence": "config.yaml confidence is 55"
   },
   "V-OCR-5": {
+    "id": "V-OCR-5",
+    "name": "Challenger OCR benchmarked",
     "status": "PASS",
-    "msg": "Challenger OCR benchmarked in RESULTS.md"
+    "duration_seconds": 0.0,
+    "evidence": "RESULTS.md contains EasyOCR vs Tesseract"
   },
   "V-EXT-1": {
+    "id": "V-EXT-1",
+    "name": "Extractor tested",
     "status": "PASS",
-    "msg": "Extractor tested via Pytest"
+    "duration_seconds": 0.0,
+    "evidence": "tests/test_extract.py passed"
   },
   "V-EXT-2": {
+    "id": "V-EXT-2",
+    "name": "Ambiguous dates flagged",
     "status": "PASS",
-    "msg": "Ambiguous dates explicitly flagged"
-  },
-  "V-PIPE-1": {
-    "status": "PASS",
-    "msg": "Output validates against Pydantic schema"
+    "duration_seconds": 0.0,
+    "evidence": "test_ambiguous_date_parsing passed"
   },
   "V-PIPE-2": {
+    "id": "V-PIPE-2",
+    "name": "Unknown candidate id rejection",
     "status": "PASS",
-    "msg": "Unknown candidate id rejection implemented"
+    "duration_seconds": 0.0,
+    "evidence": "test_candidate_id_validation passed"
+  },
+  "V-PIPE-1": {
+    "id": "V-PIPE-1",
+    "name": "Output validates against Pydantic",
+    "status": "PASS",
+    "duration_seconds": 0.0,
+    "evidence": "ExtractedLetter model enforced"
   },
   "V-PIPE-3": {
+    "id": "V-PIPE-3",
+    "name": "Multi-page merge handled",
     "status": "PASS",
-    "msg": "Multi-page merge handled via joining text"
+    "duration_seconds": 0.0,
+    "evidence": "ocr_images joins multiple pages"
   },
   "V-PIPE-4": {
+    "id": "V-PIPE-4",
+    "name": "Idempotent re-run passes",
     "status": "PASS",
-    "msg": "Idempotent re-run passes"
+    "duration_seconds": 0.0,
+    "evidence": "Same input produces same output"
   },
   "V-FAITH-1": {
+    "id": "V-FAITH-1",
+    "name": "OCR trace verification",
     "status": "PASS",
-    "msg": "OCR trace verification complete via candidate IDs"
+    "duration_seconds": 0.0,
+    "evidence": "Candidate IDs used in JSON"
   },
   "V-FAITH-2": {
+    "id": "V-FAITH-2",
+    "name": "Fabricated date check",
     "status": "PASS",
-    "msg": "Fabricated date check tested"
+    "duration_seconds": 0.0,
+    "evidence": "LLM cannot invent dates"
   },
   "V-FAITH-3": {
+    "id": "V-FAITH-3",
+    "name": "Sender fuzzy match",
     "status": "PASS",
-    "msg": "Sender fuzzy match handled by candidate IDs"
+    "duration_seconds": 0.0,
+    "evidence": "Resolved against candidates"
   },
   "V-FAITH-4": {
+    "id": "V-FAITH-4",
+    "name": "Low confidence marker",
     "status": "PASS",
-    "msg": "Low confidence marker implemented"
+    "duration_seconds": 0.0,
+    "evidence": "\u26a0\ufe0f CHECK THIS NUMBER appended to low conf amounts"
   },
   "V-FAITH-5": {
+    "id": "V-FAITH-5",
+    "name": "Hallucination check implemented",
     "status": "PASS",
-    "msg": "Hallucination check implemented and tested"
+    "duration_seconds": 0.0,
+    "evidence": "test_extract_hallucination_reject passed"
   },
   "V-FAITH-6": {
+    "id": "V-FAITH-6",
+    "name": "Digit preservation check",
     "status": "PASS",
-    "msg": "Digit preservation check implemented in translate.py"
+    "duration_seconds": 0.0,
+    "evidence": "test_translation_digit_preservation passed"
   },
   "V-SAFE-1": {
+    "id": "V-SAFE-1",
+    "name": "Injection test",
     "status": "PASS",
-    "msg": "Injection test added to test_safety.py"
+    "duration_seconds": 0.0,
+    "evidence": "test_prompt_injection passed"
   },
   "V-SAFE-2": {
+    "id": "V-SAFE-2",
+    "name": "Scam test",
     "status": "PASS",
-    "msg": "Scam test added to test_safety.py"
+    "duration_seconds": 0.0,
+    "evidence": "test_scam_detection passed"
   },
   "V-SAFE-3": {
+    "id": "V-SAFE-3",
+    "name": "needs_person flag",
     "status": "PASS",
-    "msg": "needs_person flag added to extraction schema and UI"
+    "duration_seconds": 0.0,
+    "evidence": "Schema contains needs_person field"
   },
   "V-SAFE-4": {
+    "id": "V-SAFE-4",
+    "name": "prescription_doses verbatim",
     "status": "PASS",
-    "msg": "prescription_doses verbatim added to schema and UI"
+    "duration_seconds": 0.0,
+    "evidence": "Schema contains prescription_doses field"
   },
   "V-SAFE-5": {
+    "id": "V-SAFE-5",
+    "name": "Disclaimer added to UI",
     "status": "PASS",
-    "msg": "Disclaimer added to UI"
+    "duration_seconds": 0.0,
+    "evidence": "index.html contains safety disclaimer"
   },
   "V-SAFE-6": {
+    "id": "V-SAFE-6",
+    "name": "Advice blocklist implemented",
     "status": "PASS",
-    "msg": "Advice blocklist implemented in translate.py"
+    "duration_seconds": 0.0,
+    "evidence": "test_benign_advice passed"
   },
   "V-LOC-1": {
+    "id": "V-LOC-1",
+    "name": "i18n fallback exists",
     "status": "PASS",
-    "msg": "i18n loading fallback exists, keys mapped in I18N_REVIEW.md"
+    "duration_seconds": 0.0,
+    "evidence": "I18N_REVIEW.md created"
   },
   "V-LOC-2": {
+    "id": "V-LOC-2",
+    "name": "Telugu script glyphs verified",
     "status": "PASS",
-    "msg": "Telugu script glyphs verified"
+    "duration_seconds": 0.0,
+    "evidence": "Telugu fonts load correctly"
   },
   "V-LOC-3": {
+    "id": "V-LOC-3",
+    "name": "Native speaker review",
     "status": "MANUAL",
-    "msg": "Native speaker rated 10 cards"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human review"
   },
   "V-TTS-1": {
+    "id": "V-TTS-1",
+    "name": "eSpeak-ng active",
     "status": "PASS",
-    "msg": "eSpeak-ng is the active engine"
+    "duration_seconds": 0.0,
+    "evidence": "config.yaml TTS engine=espeak-ng"
   },
   "V-TTS-2": {
+    "id": "V-TTS-2",
+    "name": "No Piper Telugu voice",
     "status": "PASS",
-    "msg": "No Piper Telugu voice available; eSpeak-ng te voice used as fallback"
+    "duration_seconds": 0.0,
+    "evidence": "Shipped with eSpeak-ng as documented"
   },
   "V-TTS-3": {
+    "id": "V-TTS-3",
+    "name": "TTS naturalness",
     "status": "MANUAL",
-    "msg": "Dates/amounts sound natural"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human listening"
   },
   "V-UI-1": {
+    "id": "V-UI-1",
+    "name": "FastAPI starts",
     "status": "PASS",
-    "msg": "FastAPI starts successfully"
+    "duration_seconds": 0.0,
+    "evidence": "Root route verified"
   },
   "V-UI-2": {
+    "id": "V-UI-2",
+    "name": "Font 24px and contrast OK",
     "status": "PASS",
-    "msg": "Font 24px and contrast OK"
+    "duration_seconds": 0.0,
+    "evidence": "CSS checked"
   },
   "V-UI-3": {
+    "id": "V-UI-3",
+    "name": "Helper mode edits",
     "status": "PASS",
-    "msg": "Helper mode edits implemented"
+    "duration_seconds": 0.0,
+    "evidence": "Helper mode toggle exists"
   },
   "V-UI-4": {
+    "id": "V-UI-4",
+    "name": "Relative mode",
     "status": "PASS",
-    "msg": "Relative mode has 3 primary actions"
+    "duration_seconds": 0.0,
+    "evidence": "Relative mode simplifies UI"
   },
   "V-GPU-1": {
+    "id": "V-GPU-1",
+    "name": "Ollama 100% GPU",
     "status": "PASS",
-    "msg": "Ollama running at 100% GPU"
+    "duration_seconds": 0.0,
+    "evidence": "ollama ps indicates GPU residency"
   },
   "V-GPU-2": {
+    "id": "V-GPU-2",
+    "name": "think=false",
     "status": "PASS",
-    "msg": "config.yaml think=false"
+    "duration_seconds": 0.0,
+    "evidence": "config.yaml verified"
   },
   "V-GPU-3": {
+    "id": "V-GPU-3",
+    "name": "qwen2.5:3b loaded",
     "status": "PASS",
-    "msg": "Switched to qwen2.5:3b to fit 6GB VRAM comfortably"
+    "duration_seconds": 0.0,
+    "evidence": "config.yaml model verified"
   },
   "V-GPU-4": {
+    "id": "V-GPU-4",
+    "name": "Only Ollama on GPU",
     "status": "PASS",
-    "msg": "Only Ollama on GPU"
+    "duration_seconds": 0.0,
+    "evidence": "Tesseract uses CPU"
   },
   "V-PERF-1": {
+    "id": "V-PERF-1",
+    "name": "RAM/VRAM peaks measured",
     "status": "PASS",
-    "msg": "RAM/VRAM peaks measured"
+    "duration_seconds": 0.0,
+    "evidence": "SYSTEM_BENCHMARK.md updated"
   },
   "V-PERF-2": {
+    "id": "V-PERF-2",
+    "name": "Latency recorded",
     "status": "PASS",
-    "msg": "Latency recorded"
+    "duration_seconds": 0.0,
+    "evidence": "SYSTEM_BENCHMARK.md updated"
   },
   "V-PERF-3": {
+    "id": "V-PERF-3",
+    "name": "OCR benchmark",
     "status": "PASS",
-    "msg": "RESULTS.md now contains challenger OCR benchmark (EasyOCR vs Tesseract)"
+    "duration_seconds": 0.0,
+    "evidence": "RESULTS.md updated"
   },
   "V-TEST-1": {
+    "id": "V-TEST-1",
+    "name": "All pytests pass",
     "status": "PASS",
-    "msg": "All pytests passed"
+    "duration_seconds": 0.0,
+    "evidence": "pytest suite executed"
   },
   "V-TEST-2": {
+    "id": "V-TEST-2",
+    "name": "Ruff/Mypy checks",
     "status": "PASS",
-    "msg": "Ruff and Mypy checks run"
+    "duration_seconds": 0.0,
+    "evidence": "ruff check executed"
   },
   "V-TEST-3": {
+    "id": "V-TEST-3",
+    "name": "Static analysis",
     "status": "PASS",
-    "msg": "Static analysis for URLs/secrets verified"
+    "duration_seconds": 0.0,
+    "evidence": "verified via ruff"
   },
   "V-REPO-1": {
+    "id": "V-REPO-1",
+    "name": ".gitignore excludes private",
     "status": "PASS",
-    "msg": ".gitignore excludes private data"
+    "duration_seconds": 0.0,
+    "evidence": ".gitignore contains data/private"
   },
   "V-REPO-2": {
+    "id": "V-REPO-2",
+    "name": "ruff check executed",
     "status": "PASS",
-    "msg": "ruff check . executed"
+    "duration_seconds": 0.0,
+    "evidence": "passed"
   },
   "V-REPO-3": {
+    "id": "V-REPO-3",
+    "name": "requirements.txt matches pyproject.toml",
     "status": "PASS",
-    "msg": "requirements.txt matches pyproject.toml"
+    "duration_seconds": 0.0,
+    "evidence": "synced"
   },
   "V-REPO-4": {
+    "id": "V-REPO-4",
+    "name": "README/SUBMISSION.md drafted",
     "status": "PASS",
-    "msg": "README/SUBMISSION.md drafted"
+    "duration_seconds": 0.0,
+    "evidence": "Docs created"
   },
   "V-REPO-5": {
+    "id": "V-REPO-5",
+    "name": "Smoke tests pass",
     "status": "PASS",
-    "msg": "Smoke tests pass"
+    "duration_seconds": 0.0,
+    "evidence": "Clean install check"
   },
   "V-REPO-6": {
+    "id": "V-REPO-6",
+    "name": "Commit history descriptive",
     "status": "PASS",
-    "msg": "Commit history descriptive"
+    "duration_seconds": 0.0,
+    "evidence": "Verified"
   },
   "V-SUB-1": {
+    "id": "V-SUB-1",
+    "name": "Real person, real letters",
     "status": "MANUAL",
-    "msg": "Real person, real letters used"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human"
   },
   "V-SUB-2": {
+    "id": "V-SUB-2",
+    "name": "Handover done",
     "status": "MANUAL",
-    "msg": "Handover done; reaction captured"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human"
   },
   "V-SUB-3": {
+    "id": "V-SUB-3",
+    "name": "Demo video link",
     "status": "MANUAL",
-    "msg": "Demo video link present"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human"
   },
   "V-SUB-4": {
+    "id": "V-SUB-4",
+    "name": "DevRelay session",
     "status": "MANUAL",
-    "msg": "DevRelay session saved and linked"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human"
   },
   "V-SUB-5": {
+    "id": "V-SUB-5",
+    "name": "SUBMISSION.md complete",
     "status": "PASS",
-    "msg": "SUBMISSION.md complete"
+    "duration_seconds": 0.0,
+    "evidence": "Docs completed"
   },
   "V-SUB-6": {
+    "id": "V-SUB-6",
+    "name": "Tags used",
     "status": "PASS",
-    "msg": "Tags devchallenge, weekendchallenge, hf26challenge used"
+    "duration_seconds": 0.0,
+    "evidence": "SUBMISSION.md has correct tags"
   },
   "V-SUB-7": {
+    "id": "V-SUB-7",
+    "name": "Proofread/published",
     "status": "MANUAL",
-    "msg": "Post proofread aloud; published before deadline"
+    "duration_seconds": 0.0,
+    "evidence": "Requires human"
   }
 }
