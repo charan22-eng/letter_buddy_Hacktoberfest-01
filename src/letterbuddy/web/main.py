@@ -1,7 +1,6 @@
 import asyncio
 import os
 import shutil
-import json
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
@@ -60,7 +59,7 @@ async def process_letter(file: UploadFile = File(...), _=Depends(verify_lan_pin)
     session_id = os.urandom(8).hex()
     session_path = SESSION_DIR / session_id
     session_path.mkdir(parents=True, exist_ok=True)
-    
+
     suffix = Path(file.filename or "temp.jpg").suffix
     tmp_path = session_path / f"input{suffix}"
     with open(tmp_path, "wb") as f:
@@ -116,10 +115,10 @@ async def process_text(req: TextProcessRequest, _=Depends(verify_lan_pin)):
     session_id = os.urandom(8).hex()
     session_path = SESSION_DIR / session_id
     session_path.mkdir(parents=True, exist_ok=True)
-    
+
     with open(session_path / "ocr.txt", "w", encoding="utf-8") as f:
         f.write(req.text)
-        
+
     try:
         extracted = extract_info(req.text)
         translated = translate_summary(extracted)
