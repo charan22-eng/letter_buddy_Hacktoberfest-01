@@ -9,10 +9,12 @@ from __future__ import annotations
 
 import json
 import re
+
 import httpx
 from pydantic import BaseModel, Field
 
 from letterbuddy.config import cfg
+
 
 class ExtractedLetter(BaseModel):
     sender: str = Field(description="The name of the organization or person sending the letter")
@@ -34,7 +36,7 @@ class ExtractedLetter(BaseModel):
 def _extract_candidates(ocr_text: str) -> dict[str, dict]:
     """Extract deterministic candidates and map to IDs."""
     candidates = {}
-    
+
     def find_all(pattern, c_type, prefix):
         seen_vals = set()
         for match in re.finditer(pattern, ocr_text, flags=re.IGNORECASE):
@@ -43,13 +45,13 @@ def _extract_candidates(ocr_text: str) -> dict[str, dict]:
             if val.lower() in seen_vals:
                 continue
             seen_vals.add(val.lower())
-            
+
             start = match.start()
             end = match.end()
             ctx_start = max(0, start - 20)
             ctx_end = min(len(ocr_text), end + 20)
             source_text = ocr_text[ctx_start:ctx_end].replace('\n', ' ').strip()
-            
+
             cid = f"{prefix}{len([k for k in candidates if k.startswith(prefix)])}"
             candidates[cid] = {
                 "id": cid,
@@ -62,11 +64,11 @@ def _extract_candidates(ocr_text: str) -> dict[str, dict]:
 
     date_pattern = r'\b(\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}[/-]\d{1,2}[/-]\d{1,2}|\d{1,2}(?:st|nd|rd|th)?\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4})\b'
     find_all(date_pattern, "date", "D")
-    
-    amount_pattern = r'(?:Rs\.?|₹|INR|\$)?\s*(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)'
+
+    amount_pattern = r'(?:Rs\.?|₹|INR|\$)\s*(\d{1,3}(?:,\d{2,3})*(?:\.\d{2})?)|(\d{1,3}(?:,\d{2,3})+(?:\.\d{2})?)'
     seen_amts = set()
     for match in re.finditer(amount_pattern, ocr_text, flags=re.IGNORECASE):
-        val = match.group(1)
+        val = match.group(1) or match.group(2)
         if len(val.replace(',', '')) > 2 or '.' in val:
             if val not in seen_amts:
                 seen_amts.add(val)
@@ -87,12 +89,12 @@ def _extract_candidates(ocr_text: str) -> dict[str, dict]:
 
     contact_pattern = r'\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,3})\b'
     find_all(contact_pattern, "contact", "C")
-    
-    phone_pattern = r'(\+?\d{1,3}[-.\s]?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{3,4})'
+
+    phone_pattern = r'(\+?\d{1,3}[-.\s]?\(?\d{2,5}\)?[-.\s]?\d{3,5}[-.\s]?\d{3,5})'
     seen_phones = set()
     for match in re.finditer(phone_pattern, ocr_text):
         val = match.group(1)
-        if sum(c.isdigit() for c in val) >= 8:
+        if sum(c.isdigit() for c in val) >= 8 and sum(c.isdigit() for c in val) <= 15:
             if val not in seen_phones:
                 seen_phones.add(val)
                 start = match.start()
@@ -116,7 +118,7 @@ def _extract_candidates(ocr_text: str) -> dict[str, dict]:
     url_pattern = r'(https?://(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[a-zA-Z0-9./?%&=-]*)?|www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
     find_all(url_pattern, "url", "U")
 
-    ref_pattern = r'\b(?:REF|ACCOUNT|A/C|POLICY|ID|NO)\.?\s*[:#-]?\s*([A-Z0-9-]{5,20})\b'
+    ref_pattern = r'\b((?:REF|ACCOUNT|A/C|POLICY|ID|NO)\.?\s*[:#-]?\s*[A-Z0-9-]{5,20})\b'
     find_all(ref_pattern, "reference", "R")
 
     return candidates
@@ -241,12 +243,12 @@ Respond ONLY with a valid JSON object matching this schema:
             is_scam=False,
             prescription_doses=None
         )
-        
-        from letterbuddy.safety import is_scam_deterministic, is_high_stakes_deterministic
+
+        from letterbuddy.safety import is_high_stakes_deterministic, is_scam_deterministic
         if is_scam_deterministic(ocr_text):
             letter.is_scam = True
             letter.severity = "critical"
         if is_high_stakes_deterministic(ocr_text):
             letter.needs_person = True
-            
+
         return letter
